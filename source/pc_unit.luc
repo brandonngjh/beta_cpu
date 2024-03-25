@@ -17,9 +17,14 @@ module pc_unit (
   sig pc_4_sxtc_32_sig[32];
   sig pc_4_sxtc_sig[32];
   sig pc_4_sig[32];
-  
+
+  var xAddr, illop; 
+  sig reg_data_sig[32];
+
   always {
-  
+    xAddr = h80000008;
+    illop = h80000004;
+
     // initial setups to silence output compilation errors
     pc_4_sig = 0;
     pc_4_sxtc_sig = 0;
@@ -30,15 +35,43 @@ module pc_unit (
     
     // TASK 4
     // shift-and-add pc by 4
-
+    pc_4_sxtc_32_sig = pc_4_sig + c{14x{id[15]}, id[15:0], b00};
+    pc_4_sxtc_sig = 32x{pc.q[31]};
     
-    // TASK 1 
-    // PCSEL mux 
-
+    // JT 2_mux 
+    case(pc.q[31]){
+      b0: reg_data_sig = c{b0, reg_data_1[30:2], b00};
+      b1: reg_data_sig = c{reg_data_1[31:2], b00};
+      
+      default:
+      reg_data_sig = c{b0, reg_data_1[30:2], b00};
+      }
+    
+    // TASK 1
+    // PCSEL mux
+    case(pcsel[2:0]){
+      b000: pcsel_out_sig = pc_4_sig;
+      b001: pcsel_out_sig = pc_4_sxtc_32_sig;
+      b010: pcsel_out_sig = reg_data_sig;
+      b011: pcsel_out_sig = illop;
+      b100: pcsel_out_sig = xAddr;
+      default:
+      pcsel_out_sig = pc.q;
+      }
 
     // Task 2
-    // RESET mux 
-
+    // RESET mux
+    
+    // advance the PC only when slowclk is 1 
+    if(slowclk){
+      case(rst){
+      b0: pc.d = c{pcsel_out_sig[31:2], b00};
+      b1: pc.d = h80000000;
+      default:
+      pc.d = c{pcsel_out_sig[31:2], b00};
+      }
+      // set the content of pcreg to be its next value only when slowclk == 1
+    }
     
     // output connections
     ia = pc.q;

@@ -1,17 +1,22 @@
-module sixteen_bit_right_shifter (
-    input a[16],
+module thirtytwo_bit_right_shifter (
+    input a[32],
     input b[5],
     input pad,
-    output out[16]
+    output out[32]
   ) {
+x_bit_right_shifter shifter16(#SHIFT(16));
 x_bit_right_shifter shifter8(#SHIFT(8));
 x_bit_right_shifter shifter4(#SHIFT(4));
 x_bit_right_shifter shifter2(#SHIFT(2));
 x_bit_right_shifter shifter1(#SHIFT(1));
-sig x[16],y[16],z[16];
+sig w[32],x[32],y[32],z[32];
   always {
-  
-    shifter8.a = a;
+    shifter16.a = a;
+    shifter16.shift = b[4];
+    shifter16.pad = pad;
+    w = shifter16.out;
+    
+    shifter8.a = w;
     shifter8.shift = b[3];
     shifter8.pad = pad;
     x = shifter8.out;

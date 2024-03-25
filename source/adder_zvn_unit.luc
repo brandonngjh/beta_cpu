@@ -1,26 +1,31 @@
 module adder_zvn_unit (
-    input a[16],
-    input b[16],
-    input s[16],
+    input a[32],
+    input b[32],
+    input s[32],
     input alufn,
     output z,
     output v,
     output n
   ) {
-  sig c, d, e; //connectors
+  sig c, d, e, f, g, h, i, j; //connectors
   
   always {
     // z unit
     z = ~|s;
     
     // v unit
-    c = alufn ^ b[15];
-    d = c & a[15] & ~s[15];
-    e = ~c & ~a[15] & s[15];
-    v = d | e;
+    c = alufn ^ b[31];
+    d = ~c;
+    e = ~a[31];
+    f = c & a[31];
+    g = ~s[31];
+    h = d & e;
+    i = f & g;
+    j = h & s[31];
+    v = i | j;
     
     // n unit
-    n = s[15];
+    n = s[31];
     
   }
 }

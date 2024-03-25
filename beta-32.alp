@@ -13,8 +13,8 @@
     <src>multiplier.luc</src>
     <src>instruction_rom.luc</src>
     <src>multi_seven_seg.luc</src>
-    <src>sixteen_bit_right_shifter.luc</src>
     <src>mux_4.luc</src>
+    <src>thirtytwo_bit_right_shifter.luc</src>
     <src>memory_unit.luc</src>
     <src>mirror.luc</src>
     <src>pc_unit.luc</src>
