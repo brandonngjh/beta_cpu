@@ -19,9 +19,14 @@ module regfile_memory (
     reg_data_2 = 0;
 
     // TASK 7 
-
+    reg_data_1 = registers.q[read_address_1];
+    reg_data_2 = registers.q[read_address_2];
     
-
+    if (write_address != b11111 && write_enable){
+      registers.d[write_address] = write_data;
+    }
     
+    if (read_address_1 == b11111) reg_data_1 = h0000;
+    if (read_address_2 == b11111) reg_data_2 = h0000;
   }
 }

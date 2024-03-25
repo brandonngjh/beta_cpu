@@ -35,7 +35,23 @@ module regfile_unit (
     }
     
     // TASK 6
-
+    case(ra2sel){
+      b0:
+      ra2sel_out = rb;
+      b1:
+      ra2sel_out = rc;
+      default:
+        ra2sel_out = rb;
+    }
+    
+    case(wasel){
+      b0:
+      wasel_out = b11110;
+      b1:
+      wasel_out = rc;
+      default:
+        wasel_out = rc;
+    }
     
     
     // connections to regfile memory
@@ -46,7 +62,12 @@ module regfile_unit (
 
     // TASK 8
     // compute z 
-
+    if (regfile.reg_data_1 == 0) {
+      z = 1;
+    }
+    else {
+      z = 0;
+    }
     
 
     // output connections
@@ -55,7 +76,7 @@ module regfile_unit (
     
     // TASK 9
     // connect output of RD2 port of regfile_memory as mwd
-
+    mwd = regfile.reg_data_2;
 
 
   }
