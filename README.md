@@ -2,6 +2,8 @@
 
 This repository contains the source code that implements 32-bit Beta CPU in Lucid programming language, used in 50.002 Lab. Simply open `BetaComponents32.alp` with [Alchitry Lab](https://alchitry.com/alchitry-labs), **compile**, and **flash** it to Alchitry Au + Alchitry Io Element Board.
 
+This CPU is designed as part of SUTD Course 50.002: Computation Strucutures assignment.
+
 ### Instruction Data
 
 Currently, only 5 instructions are hardcoded inside `instruction_rom.luc`. These instructions are designed to _loop_ to make it easier to demonstrate the workings of the Beta CPU. You may change the content of this instruction rom to load any Beta CPU instruction. By the end of the lab, you will experiment with the complete 28 tester instructions (testing IRQ, ILLOP, and RESET handlers). 
